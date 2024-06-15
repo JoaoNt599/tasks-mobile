@@ -1,5 +1,6 @@
+import { TaskService } from './../services/task.service';
 import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,11 @@ import { AlertController } from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor(public alertController: AlertController) {}
+  constructor(
+    public alertController: AlertController, 
+    public taskService: TaskService,
+    public toastController: ToastController
+  ) {}
 
   async presentAlertPromptAdd() {
     const alert = await this.alertController.create({
@@ -28,9 +33,24 @@ export class HomePage {
       ],
       buttons: [
         { text: 'Cancel', role: 'cancel' },
-        { text: 'Save', handler: () => { console.log('Confirm Ok'); } }
-      ]
+        { text: 'Save', handler: (alertData) => { 
+          if (alertData.task != "")
+            this.taskService.addTask(alertData.task, alertData.date);
+          else {
+            this.presentToast();
+            this.presentAlertPromptAdd();
+          }
+        } 
+      }]
     });
     await alert.present();
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: "Complete the task!",
+      duration: 2000
+    });
+    toast.present();
   }
 }
