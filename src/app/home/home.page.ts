@@ -46,6 +46,22 @@ export class HomePage {
     await alert.present();
   }
 
+  async presentAlertPromptDel(index: number) {
+    const alert = await this.alertController.create({
+      header: 'Delete task',
+      message: 'Do you want to delete the task?',
+      buttons: [
+        { text: 'Cancel', 
+          role: 'cancel' 
+        },
+        { 
+          text: 'Delete', handler: () => this.taskService.delTask(index)
+        }   
+      ]
+    });
+    await alert.present();
+  }
+
   async presentToast() {
     const toast = await this.toastController.create({
       message: "Complete the task!",
