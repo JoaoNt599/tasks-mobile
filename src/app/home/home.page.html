@@ -8,6 +8,17 @@
 
 <ion-content [fullscreen]="true">
 
+  <ion-segment [(ngModel)]="type">
+    <ion-segment-button value="pending" layout="icon-start">
+      <ion-icon name="alert-circle"></ion-icon>
+      <ion-label>Pending</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="done" layout="icon-start">
+      <ion-icon name="checkmark-circle"></ion-icon>
+      <ion-label>Completed</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
   <ion-list>
     <ion-item-sliding *ngFor="let task of taskService.getTasks(); let i = index">
       <ion-item>
