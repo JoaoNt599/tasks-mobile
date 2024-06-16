@@ -24,8 +24,8 @@ export class TaskService {
     console.log(this.tasks)
   }
 
-  public delTask() {
-
+  public delTask(index: number) {
+    this.tasks.splice(index, 1);
   }
 
   public updateTask() {
