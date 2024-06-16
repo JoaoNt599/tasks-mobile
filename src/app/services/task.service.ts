@@ -28,8 +28,12 @@ export class TaskService {
     this.tasks.splice(index, 1);
   }
 
-  public updateTask() {
-
+  public updateTask(index: number, value: string, date: string) {
+    let task: Task = this.tasks[index];
+    task.value = value;
+    date = date.replace("-", "/");
+    task.date = new Date(date);
+    this.tasks.splice(index, 1, task);
   }
 }
 
