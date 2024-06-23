@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Plugins } from '@capacitor/core';
-const { Storage } = Plugins;
+import { Storage } from '@capacitor/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  
-  private tasks: Task[] = []
 
-  constructor() { }
+  public tasks: Task[] = [];
+
+  constructor() {
+    this.getFromStorage();
+  }
 
   public getTasks(): Task[] {
-    return this.tasks
+    return this.tasks;
   }
 
   public addTask(value: string, date: string) {
     date = date.replace("-", "/");
-    let task : Task = {
-      value: value, 
+    let task: Task = {
+      value: value,
       date: new Date(date),
       done: false
     };
@@ -40,16 +41,29 @@ export class TaskService {
     this.setToStorage();
   }
 
-  async setToStorage() {
-    await Storage['set']({
+  public async setToStorage() {
+    await Storage.set({
       key: 'tasks',
       value: JSON.stringify(this.tasks)
     });
   }
+
+  public async getFromStorage() {
+    const resp = await Storage.get({ key: 'tasks' });
+    const tempTasks = JSON.parse(resp.value || '[]');
+
+    if (tempTasks != null) {
+      this.tasks = tempTasks.map((t: any) => ({
+        value: t.value,
+        date: new Date(t.date),
+        done: t.done
+      }));
+    }
+  }
 }
 
 interface Task {
-  value: string
-  date: Date
-  done?: boolean
+  value: string;
+  date: Date;
+  done?: boolean;
 }
