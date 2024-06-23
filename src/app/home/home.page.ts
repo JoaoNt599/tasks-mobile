@@ -2,6 +2,7 @@ import { TaskService } from './../services/task.service';
 import { Component } from '@angular/core';
 import { AlertController, PopoverController, ToastController } from '@ionic/angular';
 import { PopoverComponent } from '../popover/popover.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,7 @@ import { PopoverComponent } from '../popover/popover.component';
 export class HomePage {
 
   type : string = "pending";
+  public tasks!: Observable<any[]>;
 
   constructor(
     public alertController: AlertController, 
@@ -20,7 +22,8 @@ export class HomePage {
   ) {}
 
   ngOnInit() {
-    this.taskService.getFromStorage()
+    //this.taskService.getFromStorage();
+    this.tasks = this.taskService.getFromFirestore();
   }
 
   async presentAlertPromptAdd() {
@@ -69,12 +72,11 @@ export class HomePage {
           type: 'date',
           min: '2019-03-01',
           max: '2025-12-31',
-          value: task.date.getFullYear() + "-" + (
-            (task.date.getMonth()+1) < 10 ? "0" + task.date.getMonth()+1 : task.date.getMonth()+1
-          ) + "-" + (
-            (task.date.getDay()+1) < 10 ? "0" + task.date.getDay() : task.date.getDay()
-          )
-        }
+          value: task.date ? task.date.toDate().getFullYear() + "-" + 
+          ((task.date.toDate().getMonth()+1) < 10 ? "0" + task.date.toDate().getMonth()+1 : task.date.toDate().getMonth()+1) 
+          + "-" +  
+          ((task.date.toDate().getDate()) < 10 ? "0" + task.date.toDate().getDate() : task.date.toDate()) : ''
+        },
       ],
       buttons: [
         { text: 'Cancel', 
@@ -83,10 +85,10 @@ export class HomePage {
         { text: 'Save', 
           handler: (alertData) => { 
           if (alertData.task != "")
-            this.taskService.updateTask(index, alertData.task, alertData.date)
+            this.taskService.updateTask(index, alertData.task, alertData.date, task.done)
           else {
             this.presentToast();
-            this.taskService.updateTask(index, alertData.task, alertData.date)
+            this.presentAlertPromptUpdate(index, task)
           }
         } 
       }]
@@ -103,7 +105,7 @@ export class HomePage {
           role: 'cancel' 
         },
         { 
-          text: 'Delete', handler: () => this.taskService.delTask(index)
+          text: 'Delete', handler: () => this.taskService.deleteOnFirestore(index)
         }   
       ]
     });

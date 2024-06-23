@@ -9,12 +9,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { TaskService } from './services/task.service';
 import { PopoverComponent } from './popover/popover.component';
 
+import { AngularFireModule } from '@angular/fire/compat';
+// import { AngularFirestoreModule } from '@angular/fire/compat/firestore/'; 
+import { firebaseConfig } from './credential'; 
+
 @NgModule({
   declarations: [
     AppComponent,
     PopoverComponent
   ],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [
+    BrowserModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    // AngularFirestoreModule,
+  ],
   providers: [
     { provide: RouteReuseStrategy, 
       useClass: IonicRouteStrategy 
