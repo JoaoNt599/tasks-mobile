@@ -19,6 +19,10 @@ export class HomePage {
     public popoverController: PopoverController
   ) {}
 
+  ngOnInit() {
+    this.taskService.getFromStorage()
+  }
+
   async presentAlertPromptAdd() {
     const alert = await this.alertController.create({
       header: 'Add Task',
