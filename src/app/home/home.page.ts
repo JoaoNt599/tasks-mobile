@@ -2,6 +2,7 @@ import { TaskService } from './../services/task.service';
 import { Component } from '@angular/core';
 import { AlertController, PopoverController, ToastController } from '@ionic/angular';
 import { PopoverComponent } from '../popover/popover.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,7 @@ import { PopoverComponent } from '../popover/popover.component';
 export class HomePage {
 
   type : string = "pending";
+  public tasks!: Observable<any[]>;
 
   constructor(
     public alertController: AlertController, 
@@ -20,7 +22,8 @@ export class HomePage {
   ) {}
 
   ngOnInit() {
-    this.taskService.getFromStorage()
+    //this.taskService.getFromStorage();
+    this.tasks = this.taskService.getFromFirestore();
   }
 
   async presentAlertPromptAdd() {

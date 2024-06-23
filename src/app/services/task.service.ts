@@ -52,6 +52,11 @@ export class TaskService {
     this.setToStorage();
   }
 
+  public updateTaskDone(id: string , task: Task) {
+    task.done = !task.done;
+    this.updateOnFirestore(id, task);
+  }
+
   public async setToStorage() {
     await Storage.set({
       key: 'tasks',
@@ -74,6 +79,14 @@ export class TaskService {
 
   public addTOFirestore(record: Task) {
     return this.firestore.collection(this.collectionName).add(record);
+  }
+
+  public getFromFirestore() {
+    return this.firestore.collection(this.collectionName).valueChanges({idField: 'id'})
+  }
+
+  public updateOnFirestore(recordId: string, record: Task) {
+    this.firestore.doc(this.collectionName + '/' + recordId).update(record);
   }
 }
 

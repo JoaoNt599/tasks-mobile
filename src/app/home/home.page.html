@@ -25,12 +25,12 @@
   </ion-segment>
 
   <ion-list *ngIf="type == 'pending'">
-    <ion-item-sliding *ngFor="let task of taskService.getTasks(); let i = index">
+    <ion-item-sliding *ngFor="let task of tasks | async; let i = index">
       <ion-item *ngIf="!task.done" >
         <ion-label>{{task.value}}</ion-label>
-        <ion-checkbox slot="start" [(ngModel)]="task.done" (ionChange)="taskService.setToStorage()"></ion-checkbox>
+        <ion-checkbox slot="start" (ionChange)="taskService.updateTaskDone(task.id, task)"></ion-checkbox>
         <ion-badge color="warning" *ngIf="task.date">
-          {{ task.date.getDate() + "/" + (task.date.getMonth() + 1) + "/" + task.date.getFullYear() }}
+          {{ task.date.toDate() | date: 'dd/MM/yyyy' }}
         </ion-badge>
       </ion-item>
       <ion-item-options side="end">
@@ -45,12 +45,12 @@
   </ion-list>
 
   <ion-list *ngIf="type == 'done'">
-    <ion-item-sliding *ngFor="let task of taskService.getTasks(); let i = index">
-      <ion-item *ngIf="task.done" >
+    <ion-item-sliding *ngFor="let task of tasks | async; let i = index">
+      <ion-item *ngIf="task.done">
         <ion-label>{{task.value}}</ion-label>
-        <ion-checkbox slot="start" [(ngModel)]="task.done" (ionChange)="taskService.setToStorage()"></ion-checkbox>
+        <ion-checkbox slot="start" checked="true" (ionChange)="taskService.updateTaskDone(task.id, task)"></ion-checkbox>
         <ion-badge color="warning" *ngIf="task.date">
-          {{ task.date.getDate() + "/" + (task.date.getMonth() + 1) + "/" + task.date.getFullYear() }}
+          {{ task.date.toDate() | date: 'dd/MM/yyyy' }}
         </ion-badge>
       </ion-item>
       <ion-item-options side="end">
