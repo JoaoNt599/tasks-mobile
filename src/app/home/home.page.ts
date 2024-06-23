@@ -106,7 +106,7 @@ export class HomePage {
           role: 'cancel' 
         },
         { 
-          text: 'Delete', handler: () => this.taskService.delTask(index)
+          text: 'Delete', handler: () => this.taskService.deleteOnFirestore(index)
         }   
       ]
     });

@@ -52,7 +52,7 @@ export class TaskService {
     this.setToStorage();
   }
 
-  public updateTaskDone(id: string , task: Task) {
+  public updateTaskDone(id: number , task: Task) {
     task.done = !task.done;
     this.updateOnFirestore(id, task);
   }
@@ -85,9 +85,14 @@ export class TaskService {
     return this.firestore.collection(this.collectionName).valueChanges({idField: 'id'})
   }
 
-  public updateOnFirestore(recordId: string, record: Task) {
+  public updateOnFirestore(recordId: number, record: Task) {
     this.firestore.doc(this.collectionName + '/' + recordId).update(record);
   }
+
+  public deleteOnFirestore(recordId: number) {
+    this.firestore.doc(this.collectionName + '/' + recordId).delete();
+  }
+  
 }
 
 interface Task {
