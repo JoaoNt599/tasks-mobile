@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins;
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +23,12 @@ export class TaskService {
       done: false
     };
     this.tasks.push(task);
-    console.log(this.tasks)
+    this.setToStorage();
   }
 
   public delTask(index: number) {
     this.tasks.splice(index, 1);
+    this.setToStorage();
   }
 
   public updateTask(index: number, value: string, date: string) {
@@ -34,6 +37,14 @@ export class TaskService {
     date = date.replace("-", "/");
     task.date = new Date(date);
     this.tasks.splice(index, 1, task);
+    this.setToStorage();
+  }
+
+  async setToStorage() {
+    await Storage['set']({
+      key: 'tasks',
+      value: JSON.stringify(this.tasks)
+    });
   }
 }
 
