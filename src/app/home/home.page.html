@@ -34,7 +34,7 @@
         </ion-badge>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option color="success" (click)="presentAlertPromptUpdate(i, task)">
+        <ion-item-option color="success" (click)="presentAlertPromptUpdate(task.id, task)">
           <ion-icon name="create-outline" slot="icon-only"></ion-icon>
         </ion-item-option>
         <ion-item-option color="danger" (click)="presentAlertPromptDel(task.id)">
@@ -54,7 +54,7 @@
         </ion-badge>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option color="success" (click)="presentAlertPromptUpdate(i, task)">
+        <ion-item-option color="success" (click)="presentAlertPromptUpdate(task.id, task)">
           <ion-icon name="create-outline" slot="icon-only"></ion-icon>
         </ion-item-option>
         <ion-item-option color="danger" (click)="presentAlertPromptDel(task.id)">

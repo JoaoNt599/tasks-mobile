@@ -43,13 +43,29 @@ export class TaskService {
     this.setToStorage();
   }
 
-  public updateTask(index: number, value: string, date: string) {
-    let task: Task = this.tasks[index];
+  public updateTask(index: number, value: string, date: string, done: boolean) {
+    let task: Task;
+    if (date != '') {
+      date = date.replace("-", "/");
+      task = {
+        value: value,
+        date: new Date(date),
+        done: done
+      };
+    } else {
+      task = {
+        value: value,
+        done: done 
+      };
+    }
+    this.updateOnFirestore(index, task);
+    
+    /* let task: Task = this.tasks[index];
     task.value = value;
     date = date.replace("-", "/");
     task.date = new Date(date);
-    this.tasks.splice(index, 1, task);
-    this.setToStorage();
+    this.tasks.splice(index, 1, task); 
+    this.setToStorage(); */
   }
 
   public updateTaskDone(id: number , task: Task) {
