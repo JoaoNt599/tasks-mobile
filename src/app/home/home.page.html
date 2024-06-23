@@ -29,8 +29,8 @@
       <ion-item *ngIf="!task.done" >
         <ion-label>{{task.value}}</ion-label>
         <ion-checkbox slot="start" [(ngModel)]="task.done" (ionChange)="taskService.setToStorage()"></ion-checkbox>
-        <ion-badge color="warning" *ngIf="task.date.getDate()">
-          {{task.date.getDate() + "/" + (task.date.getMonth()+1) + "/" + task.date.getFullYear()}}
+        <ion-badge color="warning" *ngIf="task.date">
+          {{ task.date.getDate() + "/" + (task.date.getMonth() + 1) + "/" + task.date.getFullYear() }}
         </ion-badge>
       </ion-item>
       <ion-item-options side="end">
@@ -48,9 +48,9 @@
     <ion-item-sliding *ngFor="let task of taskService.getTasks(); let i = index">
       <ion-item *ngIf="task.done" >
         <ion-label>{{task.value}}</ion-label>
-        <ion-checkbox slot="start" [(ngModel)]="task.done"  (ionChange)="taskService.setToStorage()"></ion-checkbox>
-        <ion-badge color="warning" *ngIf="task.date.getDate()">
-          {{task.date.getDate() + "/" + (task.date.getMonth()+1) + "/" + task.date.getFullYear()}}
+        <ion-checkbox slot="start" [(ngModel)]="task.done" (ionChange)="taskService.setToStorage()"></ion-checkbox>
+        <ion-badge color="warning" *ngIf="task.date">
+          {{ task.date.getDate() + "/" + (task.date.getMonth() + 1) + "/" + task.date.getFullYear() }}
         </ion-badge>
       </ion-item>
       <ion-item-options side="end">
@@ -65,7 +65,7 @@
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="danger" (click)=" presentAlertPromptAdd()">
+    <ion-fab-button color="danger" (click)="presentAlertPromptAdd()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

@@ -1,3 +1,4 @@
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
 
@@ -6,9 +7,10 @@ import { Storage } from '@capacitor/storage';
 })
 export class TaskService {
 
-  public tasks: Task[] = [];
+  private tasks: Task[] = [];
+  private collectionName: string = 'Task';
 
-  constructor() {
+  constructor(private firestore: AngularFirestore) {
     this.getFromStorage();
   }
 
@@ -17,13 +19,22 @@ export class TaskService {
   }
 
   public addTask(value: string, date: string) {
-    date = date.replace("-", "/");
-    let task: Task = {
-      value: value,
-      date: new Date(date),
-      done: false
-    };
+    let task: Task;
+    if (date != '') {
+      date = date.replace("-", "/");
+      task = {
+        value: value,
+        date: new Date(date),
+        done: false
+      };
+    } else {
+      task = {
+        value: value,
+        done: false
+      };
+    }
     this.tasks.push(task);
+    this.addTOFirestore(task);
     this.setToStorage();
   }
 
@@ -55,15 +66,19 @@ export class TaskService {
     if (tempTasks != null) {
       this.tasks = tempTasks.map((t: any) => ({
         value: t.value,
-        date: new Date(t.date),
+        date: t.date ? new Date(t.date) : undefined,
         done: t.done
       }));
     }
+  }
+
+  public addTOFirestore(record: Task) {
+    return this.firestore.collection(this.collectionName).add(record);
   }
 }
 
 interface Task {
   value: string;
-  date: Date;
-  done?: boolean;
+  date?: Date;
+  done: boolean;
 }
