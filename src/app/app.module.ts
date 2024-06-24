@@ -10,8 +10,9 @@ import { TaskService } from './services/task.service';
 import { PopoverComponent } from './popover/popover.component';
 
 import { AngularFireModule } from '@angular/fire/compat';
-// import { AngularFirestoreModule } from '@angular/fire/compat/firestore/'; 
 import { firebaseConfig } from './credential'; 
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -23,13 +24,14 @@ import { firebaseConfig } from './credential';
     IonicModule.forRoot(), 
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    // AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [
     { provide: RouteReuseStrategy, 
       useClass: IonicRouteStrategy 
     },
-    TaskService
+    TaskService,
+    AuthService
   ],
   bootstrap: [AppComponent],
 })
