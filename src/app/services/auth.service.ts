@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat';
 import { Observable, from } from 'rxjs';
+import { GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthService {
     this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider);
   }
 
-  public logout() : Observable<any> {
+  /* public logout() : Observable<any> {
     return from(this.auth.signOut());
-  }
+  } */
 }
