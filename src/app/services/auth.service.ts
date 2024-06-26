@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat';
 import { Observable, from } from 'rxjs';
 import { GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 
@@ -12,14 +11,16 @@ export class AuthService {
   constructor(public auth: AngularFireAuth) { }
 
   public loginWithGoogle() {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider);
+    const provider = new GoogleAuthProvider();
+    this.auth.signInWithPopup(provider);
   }
 
   public loginWithFacebook() {
-    this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider);
+    const provider = new FacebookAuthProvider();
+    this.auth.signInWithPopup(provider);
   }
 
-  /* public logout() : Observable<any> {
+  public logout(): Observable<any> {
     return from(this.auth.signOut());
-  } */
+  }
 }
