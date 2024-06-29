@@ -10,6 +10,11 @@ export class AuthService {
 
   constructor(public auth: AngularFireAuth) { }
 
+  public logged() {
+    console.log(this.auth.user);
+    return this.auth.user;
+  }
+
   public loginWithGoogle() {
     const provider = new GoogleAuthProvider();
     this.auth.signInWithPopup(provider);
