@@ -28,4 +28,8 @@ export class PopoverComponent  implements OnInit {
     )
   }
 
+  openProfile() {
+    this.router.navigate(['profile']);
+    this.popoverController.dismiss();
+  }
 }
