@@ -43,7 +43,7 @@ export class HomePage {
         }
       ],
       buttons: [
-        { text: 'Cancel', role: 'cancel' },
+        { text: 'Cancel', role: 'cancel', },
         { text: 'Save', handler: (alertData) => { 
           if (alertData.task != "")
             this.taskService.addTask(alertData.task, alertData.date);
