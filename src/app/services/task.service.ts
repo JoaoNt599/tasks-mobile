@@ -25,7 +25,7 @@ export class TaskService {
       task = {
         value: value,
         date: new Date(date),
-        done: false
+        done: false,
       };
     } else {
       task = {

@@ -1,9 +1,11 @@
  <ion-content>
-  <img src="../../assets/icon/check-mark.svg" class="logo">
-  <ion-button color="danger" expand="block"  (click)="authService.loginWithGoogle()">
-    Entre com o Google
+  <img src="../../assets/ic_launcher.webp" class="logo">
+  <ion-button color="dark" expand="block"  (click)="authService.loginWithGoogle()">
+    <ion-icon name="logo-google" slot="start" color="danger"></ion-icon>
+    Enter with Google
   </ion-button>
-  <ion-button color="primary" expand="block" (click)="authService.loginWithFacebook()">
-    Entre com o Facebook
+  <ion-button color="dark" expand="block" (click)="authService.loginWithFacebook()">
+    <ion-icon name="logo-facebook" slot="start" color="primary"></ion-icon>
+    Enter with Facebook
   </ion-button>
 </ion-content>
